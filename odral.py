@@ -595,7 +595,7 @@ if st.session_state.get('uploaded_flag', 0) == True and st.session_state.get('de
                     hr_col = f"{day}Hr"
                     if all(col in TripPlan.columns for col in [km_col, drop_col, cyl_col, traffic_col]):
                         TripPlan[hr_col] = (
-                            (TripPlan[km_col] * TripPlan[traffic_col] / (speed * TripPlan['Driver'])) +
+                            (TripPlan[km_col] * TripPlan[traffic_col].fillna(1) / (speed * TripPlan['Driver'].fillna(1))) +
                             (TripPlan[drop_col] * 0.5) +
                             (TripPlan[cyl_col] * 2 * 20 / 3600)
                         ).round(1)
